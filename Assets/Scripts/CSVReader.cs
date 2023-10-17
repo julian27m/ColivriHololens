@@ -9,6 +9,7 @@ public class CSVReader : MonoBehaviour
 
     void Start()
     {
+        string filePath = Path.Combine(Application.streamingAssetsPath, csvFilePath);
         ReadCSVFile(csvFilePath);
 
         

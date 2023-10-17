@@ -20,7 +20,7 @@ public class ServerDataFetcher : MonoBehaviour
 
     private List<ComputerDynamicData> computerDataList = new List<ComputerDynamicData>();
 
-    private int numComputers = 2; // Cambia esto al número real de computadoras
+    private int numComputers = 26; // Cambia esto al número real de computadoras
 
     void Start()
     {
@@ -33,7 +33,7 @@ public class ServerDataFetcher : MonoBehaviour
         {
             for (int i = 1; i <= numComputers; i++) // Itera a través de las computadoras remotas
             {
-                using (UnityWebRequest webRequest = UnityWebRequest.Get("http://3.14.135.44:8080/data/" + i))
+                using (UnityWebRequest webRequest = UnityWebRequest.Get("http://18.220.53.136:8080/data/" + i))
                 {
                     yield return webRequest.SendWebRequest();
 
