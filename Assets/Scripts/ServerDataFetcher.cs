@@ -14,13 +14,13 @@ public class ComputerDynamicData
 
 public class ServerDataFetcher : MonoBehaviour
 {
-    public TextMeshPro cpuTextMesh; // Reference to your TextMeshPro object for CPU
-    public TextMeshPro ramTextMesh; // Reference to your TextMeshPro object for RAM
-    public TextMeshPro diskTextMesh; // Reference to your TextMeshPro object for Disk
+    public TextMeshPro[] cpuTextMeshes; // Array de TextMeshPro para CPU
+    public TextMeshPro[] ramTextMeshes; // Array de TextMeshPro para RAM
+    public TextMeshPro[] diskTextMeshes; // Array de TextMeshPro para Disco
 
-    //public TextMeshPro cpuTextMesh2; // Reference to your TextMeshPro object for CPU
-    //public TextMeshPro ramTextMesh2; // Reference to your TextMeshPro object for RAM
-    //public TextMeshPro diskTextMesh2; // Reference to your TextMeshPro object for Disk
+    private List<ComputerDynamicData> computerDataList = new List<ComputerDynamicData>();
+
+    private int numComputers = 2; // Cambia esto al número real de computadoras
 
     void Start()
     {
@@ -29,42 +29,44 @@ public class ServerDataFetcher : MonoBehaviour
 
     IEnumerator FetchData()
     {
-        while (true) // Continuously fetch data
+        while (true) // Continuamente obtén datos
         {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get("http://157.253.192.187:8000/data"))
+            for (int i = 1; i <= numComputers; i++) // Itera a través de las computadoras remotas
             {
-                yield return webRequest.SendWebRequest();
-
-                if (webRequest.result == UnityWebRequest.Result.Success)
+                using (UnityWebRequest webRequest = UnityWebRequest.Get("http://3.14.135.44:8080/data/" + i))
                 {
-                    string jsonData = webRequest.downloadHandler.text;
+                    yield return webRequest.SendWebRequest();
 
-                    // Parse the JSON data into a ComputerDynamicData object
-                    ComputerDynamicData computerData = JsonUtility.FromJson<ComputerDynamicData>(jsonData);
+                    if (webRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        string jsonData = webRequest.downloadHandler.text;
 
-                    // Update your TextMeshPro objects with the parsed data
-                    cpuTextMesh.text = "Uso actual: " + computerData.CPUUsage;
-                    //Debug.Log("Uso actual CPU: " + computerData.CPUUsage);
-                    ramTextMesh.text = "Uso actual: " + computerData.RAMUsage;
-                    //Debug.Log("Uso actual RAM: " + computerData.RAMUsage);
-                    diskTextMesh.text = "Uso actual: " + computerData.DiskUsage;
-                    //Debug.Log("Uso actual dsico: " + computerData.DiskUsage);
+                        // Parsea los datos JSON a un objeto ComputerDynamicData
+                        ComputerDynamicData computerData = JsonUtility.FromJson<ComputerDynamicData>(jsonData);
 
-                    // Update your TextMeshPro objects with the parsed data
-                    //cpuTextMesh2.text = "Uso actual: " + computerData.CPUUsage;
-                    //Debug.Log("Uso actual CPU: " + computerData.CPUUsage);
-                    //ramTextMesh2.text = "Uso actual: " + computerData.RAMUsage;
-                    //Debug.Log("Uso actual RAM: " + computerData.RAMUsage);
-                    //diskTextMesh2.text = "Uso actual: " + computerData.DiskUsage;
-                    //Debug.Log("Uso actual dsico: " + computerData.DiskUsage);
-                }
-                else
-                {
-                    Debug.LogError("Error fetching data: " + webRequest.error);
+                        // Actualiza los TextMeshPro correspondientes
+                        cpuTextMeshes[i - 1].text = "Uso actual CPU: " + computerData.CPUUsage;
+                        ramTextMeshes[i - 1].text = "Uso actual RAM: " + computerData.RAMUsage;
+                        diskTextMeshes[i - 1].text = "Uso actual Disco: " + computerData.DiskUsage;
+
+                        // Agrega los datos a la lista
+                        if (i <= computerDataList.Count)
+                        {
+                            computerDataList[i - 1] = computerData;
+                        }
+                        else
+                        {
+                            computerDataList.Add(computerData);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Error al obtener datos para la computadora " + i + ": " + webRequest.error);
+                    }
                 }
             }
 
-            yield return new WaitForSeconds(5f); // Adjust the refresh rate as needed
+            yield return new WaitForSeconds(5f); // Ajusta la tasa de actualización según tus necesidades
         }
     }
 }

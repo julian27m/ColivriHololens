@@ -14,18 +14,12 @@ public class CSVReader : MonoBehaviour
         
         foreach (var computerData in computerDataList)
         {
-            Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
-            Debug.Log("Asignacion: " + computerData.Asignacion);
-            Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
-            Debug.Log("Memoria: " + computerData.Memoria);
-            Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
-            Debug.Log("Procesador: " + computerData.Procesador);
-            Debug.Log("Monitor: " + computerData.Monitor);
-            Debug.Log("Teclado: " + computerData.Teclado);
-            Debug.Log("Mouse: " + computerData.Mouse);
-            Debug.Log("SO: " + computerData.SO);
-            Debug.Log("SW Relevante: " + computerData.SWRelevanteInstalado);
-            Debug.Log("Mantenimiento: " + computerData.Mantenimiento);
+            //Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
+            //Debug.Log("Asignacion: " + computerData.Asignacion);
+            //Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
+            //Debug.Log("Memoria: " + computerData.Memoria);
+            //Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
+            //Debug.Log("Procesador: " + computerData.Procesador);
         }
         
         
