@@ -33,7 +33,7 @@ public class ServerDataFetcher : MonoBehaviour
         {
             for (int i = 1; i <= numComputers; i++) // Itera a través de las computadoras remotas
             {
-                using (UnityWebRequest webRequest = UnityWebRequest.Get("http://18.220.53.136:8080/data/" + i))
+                using (UnityWebRequest webRequest = UnityWebRequest.Get("http://18.188.1.225:8080/data/" + i))
                 {
                     yield return webRequest.SendWebRequest();
 
