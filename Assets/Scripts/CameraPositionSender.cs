@@ -16,30 +16,71 @@ public class CameraPositionSender : MonoBehaviour
     private string serverURL = "http://18.188.1.225:8080/data/holop";
     public float updateInterval = 3f; // Intervalo de actualización en segundos
 
+    private bool isApplicationPaused = false;
+
     private void Start()
     {
         // Inicia la actualización periódica
         InvokeRepeating("SendCameraPosition", 0f, updateInterval);
     }
 
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        isApplicationPaused = pauseStatus;
+
+        if (isApplicationPaused)
+        {
+            // La aplicación está en pausa o en segundo plano
+            // Envía un JSON con posición nula al servidor
+            CameraPosition nullPosition = new CameraPosition
+            {
+                x = 0f,
+                y = 0f,
+                z = 0f
+            };
+            string nullPositionJSON = JsonUtility.ToJson(nullPosition);
+
+            StartCoroutine(SendPositionToServer(nullPositionJSON));
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        // La aplicación se está cerrando
+        // Envía un JSON con posición nula al servidor antes de cerrar la aplicación
+        CameraPosition nullPosition = new CameraPosition
+        {
+            x = 0f,
+            y = 0f,
+            z = 0f
+        };
+        string nullPositionJSON = JsonUtility.ToJson(nullPosition);
+
+        StartCoroutine(SendPositionToServer(nullPositionJSON));
+    }
+
     void SendCameraPosition()
     {
-        // Obtén la posición de la cámara principal
-        Vector3 cameraPosition = Camera.main.transform.position;
-
-        // Crea un objeto CameraPosition y asigna la posición
-        CameraPosition position = new CameraPosition
+        if (!isApplicationPaused)
         {
-            x = cameraPosition.x,
-            y = cameraPosition.y,
-            z = cameraPosition.z
-        };
+            // La aplicación no está en pausa o en segundo plano
+            // Obtén la posición de la cámara principal
+            Vector3 cameraPosition = Camera.main.transform.position;
 
-        // Convierte el objeto en JSON
-        string json = JsonUtility.ToJson(position);
+            // Crea un objeto CameraPosition y asigna la posición
+            CameraPosition position = new CameraPosition
+            {
+                x = cameraPosition.x,
+                y = cameraPosition.y,
+                z = cameraPosition.z
+            };
 
-        // Envía el JSON al servidor
-        StartCoroutine(SendPositionToServer(json));
+            // Convierte el objeto en JSON
+            string json = JsonUtility.ToJson(position);
+
+            // Envía el JSON al servidor
+            StartCoroutine(SendPositionToServer(json));
+        }
     }
 
     IEnumerator SendPositionToServer(string json)
