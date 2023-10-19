@@ -7,7 +7,7 @@ public class SpawnQuest1 : MonoBehaviour
 {
     public GameObject objectToSpawn; // El GameObject que deseas activar o desactivar
 
-    private string serverURL = "http://18.188.1.225:8080/data/holop";
+    private string serverURL = "http://18.188.1.225:8080/data/meta1";
 
     void Start()
     {
