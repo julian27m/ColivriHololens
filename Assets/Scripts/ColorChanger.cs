@@ -5,9 +5,9 @@ using UnityEngine;
 public class ColorChanger : MonoBehaviour
 {
     [SerializeField]
-    private Material gazeMaterial; // The material to apply when gazed at
+    private Material gazeMaterial;
 
-    private Material originalMaterial; // The original material of the object
+    private Material originalMaterial;
     private Renderer objectRenderer;
     private bool isGazeHovered = false;
 
@@ -21,23 +21,19 @@ public class ColorChanger : MonoBehaviour
     {
         if (isGazeHovered)
         {
-            // Change the material to the gazeMaterial when gazed at
             objectRenderer.material = gazeMaterial;
         }
         else
         {
-            // Reset the material to the originalMaterial when gaze exits
             objectRenderer.material = originalMaterial;
         }
     }
 
-    // Called when the object is gazed at (IsGazeHovered On Entered event)
     public void Increment()
     {
         isGazeHovered = true;
     }
 
-    // Called when the gaze exits the object (IsGazeHovered On Exited event)
     public void Decrement()
     {
         isGazeHovered = false;

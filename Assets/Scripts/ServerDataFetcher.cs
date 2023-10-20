@@ -20,7 +20,7 @@ public class ServerDataFetcher : MonoBehaviour
 
     private List<ComputerDynamicData> computerDataList = new List<ComputerDynamicData>();
 
-    private int numComputers = 26; // Cambia esto al número real de computadoras
+    private int numComputers = 26;
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class ServerDataFetcher : MonoBehaviour
 
     IEnumerator FetchData()
     {
-        while (true) // Continuamente obtén datos
+        while (true)
         {
             for (int i = 1; i <= numComputers; i++) // Itera a través de las computadoras remotas
             {
@@ -66,7 +66,7 @@ public class ServerDataFetcher : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(5f); // Ajusta la tasa de actualización según tus necesidades
+            yield return new WaitForSeconds(5f);
         }
     }
 }

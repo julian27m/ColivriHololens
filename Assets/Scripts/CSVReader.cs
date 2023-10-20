@@ -5,7 +5,7 @@ using System.IO;
 public class CSVReader : MonoBehaviour
 {
     public string csvFilePath = "Assets/PuestosDeTrabajoColivriPiso120232.csv";
-    public List<ComputerData> computerDataList = new List<ComputerData>(); // Store the structured data
+    public List<ComputerData> computerDataList = new List<ComputerData>(); 
 
     void Start()
     {
@@ -32,7 +32,6 @@ public class CSVReader : MonoBehaviour
     {
         using (StreamReader sr = new StreamReader(filePath))
         {
-            // Skip the header row (column names)
             sr.ReadLine();
 
             while (!sr.EndOfStream)
@@ -40,10 +39,8 @@ public class CSVReader : MonoBehaviour
                 string line = sr.ReadLine();
                 string[] row = line.Split(',');
 
-                // Ensure that the row has the expected number of columns
                 if (row.Length >= 12)
                 {
-                    // Create a ComputerData object and populate it with the CSV data
                     ComputerData computerData = new ComputerData
                     {
                         ProyectoCargo = row[0],
@@ -60,7 +57,6 @@ public class CSVReader : MonoBehaviour
                         Mantenimiento = row[11]
                     };
 
-                    // Add the ComputerData object to the list
                     computerDataList.Add(computerData);
                 }
                 else

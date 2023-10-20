@@ -8,7 +8,6 @@ public class GazeToggleCanvas : MonoBehaviour
 
     private void Start()
     {
-        // Ensure the canvas is initially hidden
         if (canvasToToggle != null)
         {
             canvasToToggle.SetActive(false);

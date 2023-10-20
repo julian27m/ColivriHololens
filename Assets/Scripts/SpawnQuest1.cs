@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[System.Serializable]
+public class CameraPositionGet
+{
+    public float x;
+    public float y;
+    public float z;
+}
+
+
 public class SpawnQuest1 : MonoBehaviour
 {
-    public GameObject objectToSpawn; // El GameObject que deseas activar o desactivar
+    public GameObject objectToSpawn;
 
     private string serverURL = "http://18.188.1.225:8080/data/meta1";
 
@@ -24,11 +33,16 @@ public class SpawnQuest1 : MonoBehaviour
         {
             // Analiza el JSON para obtener la posición
             string json = request.downloadHandler.text;
-            CameraPositionGet position = JsonUtility.FromJson<CameraPositionGet>(json);
+            //Debug.Log("JSON: " + json);
 
-            float xPos = position.camX;
-            float yPos = position.camY;
-            float zPos = position.camZ;
+            CameraPositionGet position = JsonUtility.FromJson<CameraPositionGet>(json);
+            //Debug.Log("Position: " + position.x);
+
+            float xPos = position.x;
+            float yPos = position.y;
+            float zPos = position.z;
+
+            //Debug.Log("Posición: "+xPos+yPos+zPos);
 
             // Comprueba si la posición es x=0, y=0, z=0
             if (xPos == 0f && yPos == 0f && zPos == 0f)
@@ -50,10 +64,3 @@ public class SpawnQuest1 : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class CameraPositionGet
-{
-    public float camX; // Cambiado de x a camX
-    public float camY; // Cambiado de y a camY
-    public float camZ; // Cambiado de z a camZ
-}
