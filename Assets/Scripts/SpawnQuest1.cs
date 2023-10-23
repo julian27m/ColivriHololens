@@ -54,7 +54,7 @@ public class SpawnQuest1 : MonoBehaviour
             {
                 // La posición no es (0, 0, 0), activa el objeto y establece su posición
                 objectToSpawn.SetActive(true);
-                objectToSpawn.transform.position = new Vector3(xPos, yPos, zPos);
+                objectToSpawn.transform.position = new Vector3(xPos-9.178f, yPos+0.2f, zPos-6.785f);
             }
         }
         else
