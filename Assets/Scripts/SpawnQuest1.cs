@@ -39,14 +39,14 @@ public class SpawnQuest1 : MonoBehaviour
                 float yPos = position.y;
                 float zPos = position.z;
 
-                if (xPos == 0f && yPos == 0f && zPos == 0f)
+                if (xPos == 1000f && yPos == 1000f && zPos == 1000f)
                 {
-                    // La posición es (0, 0, 0), desactiva el objeto
+                    // La posición es (1000, 1000, 1000), desactiva el objeto
                     objectToSpawn.SetActive(false);
                 }
                 else
                 {
-                    // La posición no es (0, 0, 0), activa el objeto y establece su posición
+                    // La posición no es (1000, 1000, 1000), activa el objeto y establece su posición
                     objectToSpawn.SetActive(true);
                     objectToSpawn.transform.position = new Vector3(xPos - 9.178f, yPos + 0.2f, zPos - 6.785f);
                 }

@@ -34,9 +34,9 @@ public class CameraPositionSender : MonoBehaviour
             // Envía un JSON con posición nula al servidor
             CameraPosition nullPosition = new CameraPosition
             {
-                x = 0f,
-                y = 0f,
-                z = 0f
+                x = 1000f,
+                y = 1000f,
+                z = 1000f
             };
             string nullPositionJSON = JsonUtility.ToJson(nullPosition);
 
@@ -50,9 +50,9 @@ public class CameraPositionSender : MonoBehaviour
         // Envía un JSON con posición nula al servidor antes de cerrar la aplicación
         CameraPosition nullPosition = new CameraPosition
         {
-            x = 0f,
-            y = 0f,
-            z = 0f
+            x = 1000f,
+            y = 1000f,
+            z = 1000f
         };
         string nullPositionJSON = JsonUtility.ToJson(nullPosition);
 
