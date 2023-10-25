@@ -4,28 +4,35 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [System.Serializable]
-public class MetaProCameraPositionGet
+public class QuestProCameraData
 {
     public float x;
     public float y;
     public float z;
+    public float rotx;
+    public float roty;
+    public float rotz;
 }
 
 public class SpawnMetaPro : MonoBehaviour
 {
-    public GameObject metaPro;
-    private string serverURLMetaPro = "http://18.188.1.225:8080/data/metapro";
+    public GameObject objectToSpawn;
+    public float smoothTime = 1.0f; // Velocidad de interpolación
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
+
+    private string serverURL = "http://18.188.1.225:8080/data/metapro";
 
     void Start()
     {
-        StartCoroutine(UpdateMetaProPosition());
+        StartCoroutine(UpdateObjectPosition());
     }
 
-    IEnumerator UpdateMetaProPosition()
+    IEnumerator UpdateObjectPosition()
     {
         while (true)
         {
-            UnityWebRequest request = UnityWebRequest.Get(serverURLMetaPro);
+            UnityWebRequest request = UnityWebRequest.Get(serverURL);
 
             yield return request.SendWebRequest();
 
@@ -33,31 +40,45 @@ public class SpawnMetaPro : MonoBehaviour
             {
                 string json = request.downloadHandler.text;
 
-                MetaProCameraPositionGet position = JsonUtility.FromJson<MetaProCameraPositionGet>(json);
+                QuestProCameraData data = JsonUtility.FromJson<QuestProCameraData>(json);
 
-                float xPos = position.x;
-                float yPos = position.y;
-                float zPos = position.z;
+                float xPos = data.x;
+                float yPos = data.y;
+                float zPos = data.z;
+                float rotx = data.rotx;
+                float roty = data.roty;
+                float rotz = data.rotz;
 
                 if (xPos == 1000f && yPos == 1000f && zPos == 1000f)
                 {
                     // La posición es (1000, 1000, 1000), desactiva el objeto
-                    metaPro.SetActive(false);
+                    objectToSpawn.SetActive(false);
                 }
                 else
                 {
-                    // La posición no es (1000, 1000, 1000), activa el objeto y establece su posición
-                    metaPro.SetActive(true);
-                    metaPro.transform.position = new Vector3(xPos + 8.81945f, yPos - 6.8063f, zPos + 1.14023f);
+                    // La posición no es (1000, 1000, 1000), activa el objeto y establece la posición y rotación
+                    objectToSpawn.SetActive(true);
+
+                    // Establece la posición y rotación de destino
+                    targetPosition = new Vector3(xPos + 8.81945f, yPos - 6.8063f, zPos + 1.14023f);
+                    targetRotation = Quaternion.Euler(rotx, roty, rotz);
                 }
             }
             else
             {
-                Debug.LogError("Error fetching camera position: " + request.error);
+                Debug.LogError("Error fetching camera data: " + request.error);
             }
 
             // Espera x segundos antes de la próxima actualización
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
     }
+
+    void Update()
+    {
+        // Interpola suavemente la posición y rotación del objeto hacia la posición y rotación de destino
+        objectToSpawn.transform.position = Vector3.Lerp(objectToSpawn.transform.position, targetPosition, smoothTime * Time.deltaTime);
+        objectToSpawn.transform.rotation = Quaternion.Slerp(objectToSpawn.transform.rotation, targetRotation, smoothTime * Time.deltaTime);
+    }
 }
+
