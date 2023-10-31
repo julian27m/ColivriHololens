@@ -21,7 +21,7 @@ public class SpawnMetaPro : MonoBehaviour
     private Vector3 targetPosition;
     private Quaternion targetRotation;
 
-    private string serverURL = "http://18.188.1.225:8080/data/metapro";
+    private string serverURL = "http://172.24.100.110:8080/data/metapro";
 
     void Start()
     {

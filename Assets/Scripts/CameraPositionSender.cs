@@ -16,7 +16,7 @@ public class CameraData
 
 public class CameraPositionSender : MonoBehaviour
 {
-    private string serverURL = "http://18.188.1.225:8080/data/holop";
+    private string serverURL = "http://172.24.100.110:8080/data/holop";
     public float updateInterval = 2f; // Intervalo de actualización en segundos
 
     private bool isApplicationPaused = false;
