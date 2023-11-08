@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Desks1_7
+  - Desks8_13
+  - Desks17_20
+  - Desks22_24
+  - Desks21_25
+  - Desk31
+  - Desks14_16
   layers:
   - Default
   - TransparentFX
