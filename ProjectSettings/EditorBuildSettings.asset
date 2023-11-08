@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ColivriColliders.unity
     guid: 0be331925af6f3f40bad2047d88f6d2a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ColivriInteractions.unity
     guid: 268ae1b5efd3b9a4eb6c4aa6d67805d0
+  - enabled: 1
+    path: Assets/Scenes/Hololens 2.unity
+    guid: 891abf4706a862c46b88388b59605876
   m_configObjects:
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: ebb20005a868235438e011d138a95198, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: c9fd76c0c36ebd7429266e636524fc9d, type: 2}
