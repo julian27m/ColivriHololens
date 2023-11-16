@@ -6,6 +6,12 @@ public class CreateGreyBoxes : MonoBehaviour
 {
     public GameObject CollidersPrefab;
 
+    public float offsetX = 0f;
+    public float offsetY = 0.86f;
+    public float offsetZ = 0f;
+    public float offsetX8_13 = 0f;
+    public float offsetZ1_7 = -0.43f;
+
     void Start()
     {
         CreateBoxesFromDesks();
@@ -24,9 +30,8 @@ public class CreateGreyBoxes : MonoBehaviour
         foreach (GameObject desks1_7 in Desks1_7)
         {
             Vector3 deskPosition1_7 = desks1_7.transform.position;
-
-            // Crea la "grey box" en la posición del escritorio
-            GameObject colliders1_7 = Instantiate(CollidersPrefab, deskPosition1_7, Quaternion.identity);
+            Vector3 adjustedPosition = new Vector3(deskPosition1_7.x + offsetX, deskPosition1_7.y + offsetY, deskPosition1_7.z + offsetZ1_7);
+            GameObject colliders1_7 = Instantiate(CollidersPrefab, adjustedPosition, Quaternion.identity);
 
             //colliders1_7.transform.position = new Vector3(0, 0, 0); 
             //colliders1_7.transform.rotation = Quaternion.Euler(0, -90, 0);
@@ -37,9 +42,8 @@ public class CreateGreyBoxes : MonoBehaviour
         foreach (GameObject desks8_13 in Desks8_13)
         {
             Vector3 deskPosition8_13 = desks8_13.transform.position;
-
-            // Crea la "grey box" en la posición del escritorio
-            GameObject colliders8_13 = Instantiate(CollidersPrefab, deskPosition8_13, Quaternion.identity);
+            Vector3 adjustedPosition8_13 = new Vector3(deskPosition8_13.x + offsetX8_13, deskPosition8_13.y + offsetY, deskPosition8_13.z + offsetZ);
+            GameObject colliders8_13= Instantiate(CollidersPrefab, adjustedPosition8_13, Quaternion.identity);
 
             colliders8_13.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
