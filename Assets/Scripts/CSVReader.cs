@@ -4,39 +4,46 @@ using System.IO;
 
 public class CSVReader : MonoBehaviour
 {
-    public string csvFilePath = "Assets/PuestosDeTrabajoColivriPiso120232.csv";
-    public List<ComputerData> computerDataList = new List<ComputerData>(); 
+    public string csvFilePath = "PuestosDeTrabajoColivriPiso120232";
+    public List<ComputerData> computerDataList = new List<ComputerData>();
 
     void Start()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, csvFilePath);
-        ReadCSVFile(csvFilePath);
+        // Utiliza Resources.Load para cargar el archivo CSV
+        TextAsset csvFile = Resources.Load<TextAsset>(csvFilePath);
 
-        
-        foreach (var computerData in computerDataList)
+        if (csvFile != null)
         {
-            Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
-            Debug.Log("Asignacion: " + computerData.Asignacion);
-            Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
-            Debug.Log("Memoria: " + computerData.Memoria);
-            Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
-            Debug.Log("Procesador: " + computerData.Procesador);
+            StringReader sr = new StringReader(csvFile.text);
+
+            ReadCSVFile(sr);
+
+            foreach (var computerData in computerDataList)
+            {
+                Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
+                Debug.Log("Asignacion: " + computerData.Asignacion);
+                Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
+                Debug.Log("Memoria: " + computerData.Memoria);
+                Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
+                Debug.Log("Procesador: " + computerData.Procesador);
+            }
         }
-        
-        
+        else
+        {
+            Debug.LogError("Error loading CSV file from Resources.");
+        }
     }
 
-    void ReadCSVFile(string filePath)
-{
-    try
+    void ReadCSVFile(StringReader sr)
     {
-        using (StreamReader sr = new StreamReader(filePath))
+        try
         {
-            sr.ReadLine();
+            sr.ReadLine(); 
 
-            while (!sr.EndOfStream)
+            while (true)
             {
                 string line = sr.ReadLine();
+                if (line == null) break; 
                 string[] row = line.Split(',');
 
                 if (row.Length >= 12)
@@ -65,13 +72,11 @@ public class CSVReader : MonoBehaviour
                 }
             }
         }
+        catch (IOException e)
+        {
+            Debug.LogError("Error reading CSV file: " + e.Message);
+        }
     }
-    catch (IOException e)
-    {
-        Debug.LogError("Error reading CSV file: " + e.Message);
-    }
-}
-
 }
 
 [System.Serializable]
