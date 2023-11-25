@@ -8,38 +8,39 @@ using MixedReality.Toolkit.SpatialManipulation;
 public class RAMFilter : MonoBehaviour
 {
     public ServerDataFetcher dataFetcher; // Asegúrate de asignar la referencia a este script en el Inspector
+    //private List<GameObject> activatedDesks = new List<GameObject>();
     public int indexHighestRAM = 0;
     public int indexLowestRAM = 0;
     public int indexHighestCPU = 0;
     public int indexLowestCPU = 0;
     public int indexHighestDisk = 0;
     public int indexLowestDisk = 0;
-    public GameObject[] Desk1;
-    public GameObject[] Desk2;
-    public GameObject[] Desk3;
-    public GameObject[] Desk4;
-    public GameObject[] Desk5;
-    public GameObject[] Desk6;
-    public GameObject[] Desk7;
-    public GameObject[] Desk8;
-    public GameObject[] Desk9;
-    public GameObject[] Desk10;
-    public GameObject[] Desk11;
-    public GameObject[] Desk12;
-    public GameObject[] Desk13;
-    public GameObject[] Desk14;
-    public GameObject[] Desk15;
-    public GameObject[] Desk16;
-    public GameObject[] Desk17;
-    public GameObject[] Desk18;
-    public GameObject[] Desk19;
-    public GameObject[] Desk20;
-    public GameObject[] Desk21;
-    public GameObject[] Desk22;
-    public GameObject[] Desk23;
-    public GameObject[] Desk24;
-    public GameObject[] Desk25;
-    public GameObject[] Desk26;
+    public List<GameObject> Desk1;
+    public List<GameObject> Desk2;
+    public List<GameObject> Desk3;
+    public List<GameObject> Desk4;
+    public List<GameObject> Desk5;
+    public List<GameObject> Desk6;
+    public List<GameObject> Desk7;
+    public List<GameObject> Desk8;
+    public List<GameObject> Desk9;
+    public List<GameObject> Desk10;
+    public List<GameObject>Desk11;
+    public List<GameObject> Desk12;
+    public List<GameObject> Desk13;
+    public List<GameObject> Desk14;
+    public List<GameObject> Desk15;
+    public List<GameObject> Desk16;
+    public List<GameObject> Desk17;
+    public List<GameObject> Desk18;
+    public List<GameObject> Desk19;
+    public List<GameObject> Desk20;
+    public List<GameObject> Desk21;
+    public List<GameObject> Desk22;
+    public List<GameObject> Desk23;
+    public List<GameObject> Desk24;
+    public List<GameObject> Desk25;
+    public List<GameObject> Desk26;
     
 
     void Start()
@@ -271,19 +272,28 @@ public class RAMFilter : MonoBehaviour
 
     public void ActivateAllDeskObjectsRAM(int index)
     {
-        GameObject[] desk = GetDeskArray(index);
+        List<GameObject> desk = GetDeskArray(index);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Activa el objeto
             desk[i].SetActive(true);
 
-            // Verifica si es el segundo (CPU) objeto en la lista
+            // Verifica si es el primero (RAM) objeto en la lista
             if (i == 0)
             {
+                // Almacena la información inicial del slate
+                //Vector3 initialPosition = desk[i].transform.position;
+                //Quaternion initialRotation = desk[i].transform.rotation;
+                //Vector3 initialScale = desk[i].transform.localScale;
+
+                GameObject newRam = Instantiate(desk[i]);
+
+                desk.Add(newRam);
+
                 // Obtiene el componente "Radial View" del primer objeto
-                RadialView radialView = desk[i].GetComponent<RadialView>();
+                RadialView radialView = newRam.GetComponent<RadialView>();
 
 
                 // Verifica si se encontró el componente antes de intentar activarlo
@@ -294,11 +304,11 @@ public class RAMFilter : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("No se encontró el componente 'Radial View' en el objeto: " + desk[i].name);
+                    Debug.LogWarning("No se encontró el componente 'Radial View' en el objeto: " + newRam.name);
                 }
 
                 // Obtiene el componente "Object Manipulator" del primer objeto
-                ObjectManipulator objectManipulator = desk[i].GetComponent<ObjectManipulator>();
+                ObjectManipulator objectManipulator = newRam.GetComponent<ObjectManipulator>();
 
                 // Verifica si se encontró el componente antes de intentar activarlo
                 if (objectManipulator != null)
@@ -308,7 +318,7 @@ public class RAMFilter : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
+                    Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + newRam.name);
                 }
             }
         }
@@ -316,10 +326,11 @@ public class RAMFilter : MonoBehaviour
 
     public void ActivateAllDeskObjectsCPU(int index)
     {
-        GameObject[] desk = GetDeskArray(index);
+        List<GameObject> desk = GetDeskArray(index);
+  
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Activa el objeto
             desk[i].SetActive(true);
@@ -327,8 +338,11 @@ public class RAMFilter : MonoBehaviour
             // Verifica si es el segundo (CPU) objeto en la lista
             if (i == 1)
             {
+
+                GameObject newCPU = Instantiate(desk[i]);
+                desk.Add(newCPU);
                 // Obtiene el componente "Radial View" del primer objeto
-                RadialView radialView = desk[i].GetComponent<RadialView>();
+                RadialView radialView = newCPU.GetComponent<RadialView>();
 
                 // Verifica si se encontró el componente antes de intentar activarlo
                 if (radialView != null)
@@ -342,7 +356,7 @@ public class RAMFilter : MonoBehaviour
                 }
 
                 // Obtiene el componente "Object Manipulator" del segundo objeto
-                ObjectManipulator objectManipulator = desk[i].GetComponent<ObjectManipulator>();
+                ObjectManipulator objectManipulator = newCPU.GetComponent<ObjectManipulator>();
 
                 // Verifica si se encontró el componente antes de intentar activarlo
                 if (objectManipulator != null)
@@ -360,10 +374,11 @@ public class RAMFilter : MonoBehaviour
 
     public void ActivateAllDeskObjectsDisk(int index)
     {
-        GameObject[] desk = GetDeskArray(index);
+        List<GameObject> desk = GetDeskArray(index);
+
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Activa el objeto
             desk[i].SetActive(true);
@@ -371,8 +386,11 @@ public class RAMFilter : MonoBehaviour
             // Verifica si es el tercero (HDD) objeto en la lista
             if (i == 2)
             {
+
+                GameObject newDisk = Instantiate(desk[i]);
+                desk.Add(newDisk);
                 // Obtiene el componente "Radial View" del primer objeto
-                RadialView radialView = desk[i].GetComponent<RadialView>();
+                RadialView radialView = newDisk.GetComponent<RadialView>();
 
                 // Verifica si se encontró el componente antes de intentar activarlo
                 if (radialView != null)
@@ -386,7 +404,7 @@ public class RAMFilter : MonoBehaviour
                 }
 
                 // Obtiene el componente "Object Manipulator" del tercer objeto
-                ObjectManipulator objectManipulator = desk[i].GetComponent<ObjectManipulator>();
+                ObjectManipulator objectManipulator = newDisk.GetComponent<ObjectManipulator>();
 
                 // Verifica si se encontró el componente antes de intentar activarlo
                 if (objectManipulator != null)
@@ -402,14 +420,16 @@ public class RAMFilter : MonoBehaviour
         }
     }
 
+
+
     public void DeactivateAllDeskObjectsHighRAM()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Highest: " + indexHighestRAM);
-        GameObject[] desk = GetDeskArray(indexHighestRAM);
+        List<GameObject> desk = GetDeskArray(indexHighestRAM);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -444,17 +464,22 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if(i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
     public void DeactivateAllDeskObjectsLowRAM()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Highest: " + indexLowestRAM);
-        GameObject[] desk = GetDeskArray(indexLowestRAM);
+        List<GameObject> desk = GetDeskArray(indexLowestRAM);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -489,17 +514,22 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if (i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
     public void DeactivateAllDeskObjectsHighCPU()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Highest CPU: " + indexHighestCPU);
-        GameObject[] desk = GetDeskArray(indexHighestCPU);
+        List<GameObject> desk = GetDeskArray(indexHighestCPU);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -534,17 +564,22 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if (i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
     public void DeactivateAllDeskObjectsLowCPU()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Highest: " + indexLowestCPU);
-        GameObject[] desk = GetDeskArray(indexLowestCPU);
+        List<GameObject> desk = GetDeskArray(indexLowestCPU);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -579,17 +614,22 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if (i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
     public void DeactivateAllDeskObjectsHighDisk()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Highest Disk: " + indexHighestDisk);
-        GameObject[] desk = GetDeskArray(indexHighestDisk);
+        List<GameObject> desk = GetDeskArray(indexHighestDisk);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -624,17 +664,22 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if (i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
     public void DeactivateAllDeskObjectsLowDisk()
     {
         // Desactiva todos los objetos usando el índice almacenado
         Debug.Log("Index Lowest: " + indexLowestDisk);
-        GameObject[] desk = GetDeskArray(indexLowestDisk);
+        List<GameObject> desk = GetDeskArray(indexLowestDisk);
 
         // Itera por cada objeto en la lista
-        for (int i = 0; i < desk.Length; i++)
+        for (int i = 0; i < desk.Count; i++)
         {
             // Desactiva el objeto
             desk[i].SetActive(false);
@@ -669,10 +714,15 @@ public class RAMFilter : MonoBehaviour
                     Debug.LogWarning("No se encontró el componente 'Object Manipulator' en el objeto: " + desk[i].name);
                 }
             }
+            else if (i == 6)
+            {
+                desk.Remove(desk[i]);
+            }
         }
+
     }
 
-    private GameObject[] GetDeskArray(int index)
+    private List<GameObject> GetDeskArray(int index)
     {
         if (index == 0)
         {
@@ -782,7 +832,8 @@ public class RAMFilter : MonoBehaviour
         {
             // Si el índice no coincide con ninguna lista existente, puedes agregar más casos según sea necesario.
             // Por ahora, devuelve una lista vacía.
-            return new GameObject[0];
+            List<GameObject> deskList = new List<GameObject>();
+            return deskList;
         }
     }
 }
