@@ -18,15 +18,16 @@ public class CSVReader : MonoBehaviour
 
             ReadCSVFile(sr);
 
-            foreach (var computerData in computerDataList)
-            {
-                Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
-                Debug.Log("Asignacion: " + computerData.Asignacion);
-                Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
-                Debug.Log("Memoria: " + computerData.Memoria);
-                Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
-                Debug.Log("Procesador: " + computerData.Procesador);
-            }
+            //Esto lo hice para ver si se lee bien el cvs
+            //foreach (var computerData in computerDataList)
+            //{
+            //    Debug.Log("Proyecto/Cargo: " + computerData.ProyectoCargo);
+            //    Debug.Log("Asignacion: " + computerData.Asignacion);
+            //    Debug.Log("Tarjeta Grafica: " + computerData.TarjetaGrafica);
+            //    Debug.Log("Memoria: " + computerData.Memoria);
+            //    Debug.Log("Almacenamiento: " + computerData.Almacenamiento);
+            //    Debug.Log("Procesador: " + computerData.Procesador);
+            //}
         }
         else
         {
