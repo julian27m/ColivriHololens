@@ -18,13 +18,14 @@ public class ServerDataFetcher : MonoBehaviour
     public TextMeshPro[] ramTextMeshes; // Array de TextMeshPro para RAM
     public TextMeshPro[] diskTextMeshes; // Array de TextMeshPro para Disco
 
-    private List<ComputerDynamicData> computerDataList = new List<ComputerDynamicData>();
+    public List<ComputerDynamicData> computerDataList = new List<ComputerDynamicData>();
 
     private int numComputers = 26;
 
     void Start()
     {
         StartCoroutine(FetchData());
+       
     }
 
     IEnumerator FetchData()
@@ -58,7 +59,13 @@ public class ServerDataFetcher : MonoBehaviour
                         {
                             computerDataList.Add(computerData);
                         }
+                        // Después de actualizar computerDataList
+                        //for (int x = 0; x < computerDataList.Count; x++)
+                        //{
+                         //   Debug.Log($"Computer {x + 1} - CPU: {computerDataList[x].CPUUsage}, RAM: {computerDataList[x].RAMUsage}, Disk: {computerDataList[x].DiskUsage}");
+                        //}
                     }
+                    
                     else
                     {
                         Debug.LogError("Error al obtener datos para la computadora " + i + ": " + webRequest.error);
